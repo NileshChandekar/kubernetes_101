@@ -311,7 +311,8 @@ deployment.apps/dashboard-metrics-scraper created
 nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
 ```
 
-### Run kubectl proxy to log in to Dashboard. __kubectl proxy &__
+### Run kubectl proxy to log in to Dashboard.
+__kubectl proxy &__
 
 ~~~
 nchandek@cNilesh:~$ kubectl proxy &
@@ -320,3 +321,37 @@ nchandek@cNilesh:~$ Starting to serve on 127.0.0.1:8001
 ~~~
 
 ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/1.png)
+
+### To login into dashboard we have to create a service account. I have this below which I am going to deploy now.
+
+~~~
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ cat  k8s-dashboard-admin-user.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kube-systemnchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+~~~
+
+#### Lets apply it:
+__kubectl apply -f k8s-dashboard-admin-user.yaml__
+
+~~~
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl apply -f k8s-dashboard-admin-user.yaml
+serviceaccount/admin-user created
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+~~~
