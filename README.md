@@ -263,33 +263,60 @@ nchandek@cNilesh:~$
 * The above output in more detail. __kubectl -n kube-system get pods -o wide__
 
 ~~~
-nchandek@cNilesh:~$ kubectl -n kube-system get pods -o wide
-NAME                                           READY   STATUS    RESTARTS   AGE   IP               NODE                   NOMINATED NODE   READINESS GATES
-calico-kube-controllers-75d56dfc47-xnw4v       1/1     Running   1          23h   192.168.154.70   kmaster1.example.com   <none>           <none>
-calico-node-84bn9                              1/1     Running   1          23h   192.168.100.16   kworker2.example.com   <none>           <none>
-calico-node-9s988                              1/1     Running   1          23h   192.168.100.15   kworker1.example.com   <none>           <none>
-calico-node-mrdfs                              1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-calico-node-rmm48                              1/1     Running   1          23h   192.168.100.17   kworker3.example.com   <none>           <none>
-coredns-66bff467f8-8hn77                       1/1     Running   1          23h   192.168.154.69   kmaster1.example.com   <none>           <none>
-coredns-66bff467f8-r5744                       1/1     Running   1          23h   192.168.154.68   kmaster1.example.com   <none>           <none>
-etcd-kmaster1.example.com                      1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-kube-apiserver-kmaster1.example.com            1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-kube-controller-manager-kmaster1.example.com   1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-kube-proxy-6cmwb                               1/1     Running   1          23h   192.168.100.16   kworker2.example.com   <none>           <none>
-kube-proxy-ftj5d                               1/1     Running   1          23h   192.168.100.15   kworker1.example.com   <none>           <none>
-kube-proxy-hvmkt                               1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-kube-proxy-n9488                               1/1     Running   1          23h   192.168.100.17   kworker3.example.com   <none>           <none>
-kube-scheduler-kmaster1.example.com            1/1     Running   1          23h   192.168.100.10   kmaster1.example.com   <none>           <none>
-nchandek@cNilesh:~$
+NAME                                           READY   STATUS    RESTARTS   AGE    IP               NODE                   NOMINATED NODE   READINESS GATES
+calico-kube-controllers-75d56dfc47-xnw4v       1/1     Running   2          2d8h   192.168.154.73   kmaster1.example.com   <none>           <none>
+calico-node-84bn9                              1/1     Running   2          2d8h   192.168.100.16   kworker2.example.com   <none>           <none>
+calico-node-9s988                              1/1     Running   2          2d8h   192.168.100.15   kworker1.example.com   <none>           <none>
+calico-node-mrdfs                              1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+calico-node-rmm48                              1/1     Running   2          2d8h   192.168.100.17   kworker3.example.com   <none>           <none>
+coredns-66bff467f8-8hn77                       1/1     Running   2          2d8h   192.168.154.72   kmaster1.example.com   <none>           <none>
+coredns-66bff467f8-r5744                       1/1     Running   2          2d8h   192.168.154.71   kmaster1.example.com   <none>           <none>
+etcd-kmaster1.example.com                      1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+kube-apiserver-kmaster1.example.com            1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+kube-controller-manager-kmaster1.example.com   1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+kube-proxy-6cmwb                               1/1     Running   2          2d8h   192.168.100.16   kworker2.example.com   <none>           <none>
+kube-proxy-ftj5d                               1/1     Running   2          2d8h   192.168.100.15   kworker1.example.com   <none>           <none>
+kube-proxy-hvmkt                               1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+kube-proxy-n9488                               1/1     Running   2          2d8h   192.168.100.17   kworker3.example.com   <none>           <none>
+kube-scheduler-kmaster1.example.com            1/1     Running   2          2d8h   192.168.100.10   kmaster1.example.com   <none>           <none>
+=====
+16
+=====
+
 ~~~
 
 ### Now lets deploy dashboard.
 
 
-~~~
-kubectl create -f dashboard.yaml
-~~~
+```
+kubectl apply  -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml
+```
+
+```
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl apply  -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml
+namespace/kubernetes-dashboard created
+serviceaccount/kubernetes-dashboard created
+service/kubernetes-dashboard created
+secret/kubernetes-dashboard-certs created
+secret/kubernetes-dashboard-csrf created
+secret/kubernetes-dashboard-key-holder created
+configmap/kubernetes-dashboard-settings created
+role.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+deployment.apps/kubernetes-dashboard created
+service/dashboard-metrics-scraper created
+deployment.apps/dashboard-metrics-scraper created
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+```
+
+### Run kubectl proxy to log in to Dashboard. __kubectl proxy &__
 
 ~~~
-kubernetes-dashboard-fd9ddd64f-s2r6r           0/1     ContainerCreating   0          22s
+nchandek@cNilesh:~$ kubectl proxy &
+[1] 14339
+nchandek@cNilesh:~$ Starting to serve on 127.0.0.1:8001
 ~~~
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/1.png)
