@@ -347,7 +347,7 @@ subjects:
 ~~~
 
 #### Lets apply it:
-__kubectl apply -f k8s-dashboard-admin-user.yaml__
+``kubectl apply -f k8s-dashboard-admin-user.yaml``
 
 ~~~
 nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl apply -f k8s-dashboard-admin-user.yaml
@@ -355,3 +355,57 @@ serviceaccount/admin-user created
 clusterrolebinding.rbac.authorization.k8s.io/admin-user created
 nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
 ~~~
+
+#### Lets check for service account which we have just created.
+
+``kubectl get sa admin-user -n kube-system``
+~~~
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl get sa admin-user -n kube-system
+NAME         SECRETS   AGE
+admin-user   1         2m27s
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+~~~
+
+#### Lets check ``in detailed`` for service account which we have just created.
+#### Make a note of Tokens filed.
+
+``kubectl describe sa admin-user -n kube-system``
+
+~~~
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl describe sa admin-user -n kube-system
+Name:                admin-user
+Namespace:           kube-system
+Labels:              <none>
+Annotations:         Image pull secrets:  <none>
+Mountable secrets:   admin-user-token-gndzp
+Tokens:              admin-user-token-gndzp
+Events:              <none>
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+~~~
+
+#### Lets check ``in detailed`` for Tokens, i.e. the secret tokens.
+``kubectl describe  secret  admin-user-token-gndzp -n kube-system``
+~~~
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$ kubectl describe  secret  admin-user-token-gndzp -n kube-system
+Name:         admin-user-token-gndzp
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: dc76b1a4-1fd4-4bd2-8d5e-bea5f1e0665d
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImJDNVRWLUVXZnQtSnR6ZGVza2JNdnZJdmdueHJRRkQ2OG5pQ3RJVXBZdncifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWduZHpwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJkYzc2YjFhNC0xZmQ0LTRiZDItOGQ1ZS1iZWE1ZjFlMDY2NWQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.OLUUtEgrqNp2MlhpxB4Et1RLK3oDXn24ewEFGQAiZk_y54253qxvjI7JBg5vknAIOMTgV3-HTfmK2aWVMVrI7UONpxEujFhSjJXhqYdpH7Fcb35TqjmsjbEo-oM4L0lBgxRuOk1Wn2swvzzyBWT3G8zjpFl2nVRaYGKDVCj5VybVj4ysu1QATgAc8gKiolkCJjRStnNK5IkKs_g9b4CYpA1z7a4ldXvX79Z5QivIz_rDPJifB372NUodTkpGYYICuxpM7Dr_d_VNLMG5svbDijqDr3Mq5bcOfSRMDPnzkK7a51Mznf8rC4RCs2FduaAPtkQVyk0GPab2X9ZqRrrFaw
+nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
+~~~
+
+#### Now use this token and try login into the Dashboard.
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/2.png)
+
+#### The default overview of the Kubernetes Dashboard. 
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/3.png)
