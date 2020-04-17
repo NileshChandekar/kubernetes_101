@@ -407,5 +407,14 @@ nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
 
 ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/2.png)
 
-#### The default overview of the Kubernetes Dashboard. 
+#### The default overview of the Kubernetes Dashboard.
 ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/3.png)
+
+#### Cluster Nodes details in Dashboard.
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/4.png)
+
+#### Lets apply the new yaml ``heapster-influxdb-grafana.yaml``
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/5.png)
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/6.png)
