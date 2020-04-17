@@ -413,7 +413,7 @@ nchandek@cNilesh:~/redhat/learning/kubernetes/dashboard$
 #### Cluster Nodes details in Dashboard.
 ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/4.png)
 
-#### Lets apply the new yaml ``heapster-influxdb-grafana.yaml``
+#### Lets apply the new yaml ``matric-server``
 
 ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/5.png)
 
