@@ -5,4 +5,12 @@
 * Service has,
   * cluster-ip
   * external-ip
-  
+
+* Unified method of accessing
+  the exposed workloads of Pods.
+* Durable resource
+  * static cluster IP
+  * static namespaced
+  * DNS name  
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/1112.png)
