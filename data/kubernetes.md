@@ -56,7 +56,7 @@ manages all core component control loops.
 and steers the cluster towards the
 desired state.
 
-### kube-scheduler
+#### kube-scheduler
 
 * Verbose policy-rich engine that evaluates workload
 requirements and attempts to place it on a matching
@@ -105,4 +105,12 @@ manages containers.
   * Virtlet (VM CRI compatible runtime)
 
 
-  ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/1114.png)
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/1114.png)
+
+
+## Optional Services
+
+* cloud-controller-manager
+* Cluster DNS
+* Kube Dashboard
+* Heapster / Metrics API Server
