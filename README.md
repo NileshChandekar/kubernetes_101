@@ -6,3 +6,5 @@
 
 [Service](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/services.md) 
 
+[Volume](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/volume.md) 
+
