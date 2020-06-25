@@ -4,4 +4,5 @@
 
 [Namespace](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/namespace.md) 
 
-[Services](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/services.md) 
+[Service](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/services.md) 
+
