@@ -68,13 +68,9 @@ pod/nginx1 created
 nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$
 ```
 
-```
-nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ kubectl get pod
-NAME     READY   STATUS    RESTARTS   AGE
-nginx    1/1     Running   0          86m
-```
-
 ```diff
-@@nginx1   1/1     Running   0          2m14s@@
-@@nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ @@
+nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ kubectl get pod -o wide
+NAME     READY   STATUS    RESTARTS   AGE     IP               NODE                   NOMINATED NODE   READINESS GATES
+nginx    1/1     Running   0          90m     192.168.136.74   kworker2.example.com   <none>           <none>
++ nginx1   1/1     Running   0          5m51s   192.168.33.207   kworker1.example.com   <none>           <none>
 ```
