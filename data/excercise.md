@@ -69,8 +69,8 @@ nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$
 ```
 
 ```diff
-  nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ kubectl get pod -o wide
-  NAME     READY   STATUS    RESTARTS   AGE     IP               NODE                   NOMINATED NODE   READINESS GATES
-  nginx    1/1     Running   0          90m     192.168.136.74   kworker2.example.com   <none>           <none>
-+ nginx1   1/1     Running   0          5m51s   192.168.33.207   kworker1.example.com   <none>           <none>
+  Wed Jul  1 17:41:06 IST 2020
+  NAME     READY   STATUS    RESTARTS   AGE    IP               NODE                   NOMINATED NODE   READINESS GATES
+  nginx    1/1     Running   0          92m    192.168.136.74   kworker2.example.com   <none>           <none>
++ nginx1   1/1     Running   0          8m4s   192.168.33.207   kworker1.example.com   <none>           <none>
 ```
