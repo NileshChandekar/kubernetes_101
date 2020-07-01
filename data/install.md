@@ -18,11 +18,15 @@ This documentation guides you in setting up a cluster with ``1`` master node and
 ## Check required ports
 |Protocol|Direction|PortRange|Purpose|
 |----|----|----|----|----|----|
-|TCP|Inbound|6443|Kubernetes API server|
+|TCP|Inbound|6443|KubernetesAPIserver|
+
+
+###
+
 |TCP|Inbound|2379-2380|etcd server client API|
 |TCP|Inbound|10250|Kubelet API|
 |TCP|Inbound|10251|kube-scheduler|
- 
+
 
 
 
