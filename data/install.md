@@ -14,7 +14,7 @@ This documentation guides you in setting up a cluster with ``1`` master node and
 |Worker|kworker3.example.com|192.168.100.17|CentOS 7|2G|1|
 
 
-## Check required ports [Master]
+## Check required ports
 |Protocol|Direction|PortRange|Purpose|
 |----|----|----|----|----|
 |TCP|Inbound|6443*|Kubernetes API server|
