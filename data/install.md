@@ -17,7 +17,7 @@ This documentation guides you in setting up a cluster with ``1`` master node and
 
 ## Check required ports
 |Protocol|Direction|PortRange|Purpose|
-|----|----|----|----|----|----|
+|-|-|-|-|-|-|
 |TCP|Inbound|6443|KubernetesAPIserver|
 
 
