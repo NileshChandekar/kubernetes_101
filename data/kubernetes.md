@@ -114,3 +114,5 @@ manages containers.
 * Cluster DNS
 * Kube Dashboard
 * Heapster / Metrics API Server
+
+## Check required ports

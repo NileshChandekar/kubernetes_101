@@ -13,6 +13,7 @@ This documentation guides you in setting up a cluster with ``1`` master node and
 |Worker|kworker2.example.com|192.168.100.16|CentOS 7|2G|1|
 |Worker|kworker3.example.com|192.168.100.17|CentOS 7|2G|1|
 
+
 ## On both Kmaster and Kworker
 Perform all the commands as root user unless otherwise specified
 ### Pre-requisites
@@ -135,6 +136,28 @@ kubectl get cs
 ```
 
 Have Fun!!
+
+
+##### Check required ports
+
+* Master node(s)
+
+|Protocol|Direction|PortRange|Purpose|
+|----|----|----|----|----|
+|TCP|Inbound|6443*|Kubernetes API server
+|TCP|Inbound|2379-2380|etcd server client API
+|TCP|Inbound|10250|Kubelet API
+|TCP|Inbound|10251|kube-scheduler
+|TCP|Inbound|10252|kube-controller-manager
+|TCP|Inbound|10255|Read-only Kubelet API
+
+* Worker node(s)
+
+|Protocol|Direction|Port Range|Purpose
+|----|----|----|----|----|
+|TCP|Inbound|10250|Kubelet API
+|TCP|Inbound|10255|Read-only Kubelet API
+|TCP|Inbound|30000-32767|NodePort Services**
 
 
 
