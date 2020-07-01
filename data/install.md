@@ -6,6 +6,7 @@ Follow this documentation to set up a Kubernetes cluster on __CentOS 7__ on KVM
 This documentation guides you in setting up a cluster with ``1`` master node and ``3`` worker node.
 
 ## Assumptions
+
 |Role|FQDN|IP|OS|RAM|CPU|
 |----|----|----|----|----|----|
 |Master|kmaster.example.com|192.168.100.10|CentOS 7|2G|2|
