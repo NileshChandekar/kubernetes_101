@@ -58,3 +58,23 @@ nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$
   * `nginx` = pod names
   * `192.168.136.74` = Container IP
   * `kworker2.example.com`    = node name where the pod is running.
+
+# Create a simple POD from CLI.
+
+```
+nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ kubectl run --generator=run-pod/v1 nginx1 --image=nginx
+Flag --generator has been deprecated, has no effect and will be removed in the future.
+pod/nginx1 created
+nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$
+```
+
+```
+nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ kubectl get pod
+NAME     READY   STATUS    RESTARTS   AGE
+nginx    1/1     Running   0          86m
+```
+
+```diff
+@@nginx1   1/1     Running   0          2m14s@@
+@@nchandek@cNilesh:~/redhat/learning/kubernetes/k8s_1_18$ @@
+```
