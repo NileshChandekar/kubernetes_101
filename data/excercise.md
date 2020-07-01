@@ -23,9 +23,9 @@ spec:
     - containerPort: 80
 ```
 
-* Run the template [POD definition]
+* Run the template [POD definition
 
-* `kubectl create -f pod-nginx.yaml
+* `kubectl create -f pod-nginx.yaml`
 
 ```
 pod/nginx created
