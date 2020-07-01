@@ -12,4 +12,4 @@
 
 [Pod](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/pods.md)
 
-[Excercise](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/excercise.md) 
+[Exercise](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/excercise.md) 
