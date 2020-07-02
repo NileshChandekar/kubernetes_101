@@ -307,4 +307,64 @@ ingress-resource-1   <none>   nilesh.example.com             80      44s
     Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
   ```
 
-  ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11113.png)
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11113.png)
+
+* Lets delete the Ingress Rule,
+
+* `kubectl delete ingress ingress-resource-1`
+```
+ingress.extensions "ingress-resource-1" deleted
+```
+
+![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11114.png)
+
+
+* Lets try something else,
+
+* `kubectl create -f nginx-deploy-firoz.yaml`
+
+  ```
+  deployment.apps/nginx-deploy-firoz created
+  ```
+* `kubectl create -f nginx-deploy-mukesh.yaml`
+
+  ```
+  deployment.apps/nginx-deploy-mukesh created
+  ```
+
+* `kubectl get all`
+
+    ```diff
+    NAME                                       READY   STATUS    RESTARTS   AGE
+    pod/nginx-deploy-firoz-b9d974f8d-lzhfs     1/1     Running   0          2m57s
+    pod/nginx-deploy-main-545f4f6967-9hjkj     1/1     Running   0          56m
+    pod/nginx-deploy-main-545f4f6967-dgxb9     1/1     Running   0          56m
+    pod/nginx-deploy-main-545f4f6967-hjzwp     1/1     Running   0          56m
+    pod/nginx-deploy-mukesh-5958d6d547-pmffp   1/1     Running   0          2m6s
+
+    NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+    service/kubernetes          ClusterIP   10.96.0.1       <none>        443/TCP   5d
+    + service/nginx-deploy-main   ClusterIP   10.105.165.88   <none>        80/TCP    42m
+
+    NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/nginx-deploy-firoz    1/1     1            1           2m57s
+    deployment.apps/nginx-deploy-main     3/3     3            3           56m
+    deployment.apps/nginx-deploy-mukesh   1/1     1            1           2m6s
+
+    NAME                                             DESIRED   CURRENT   READY   AGE
+    replicaset.apps/nginx-deploy-firoz-b9d974f8d     1         1         1       2m57s
+    replicaset.apps/nginx-deploy-main-545f4f6967     3         3         3       56m
+    replicaset.apps/nginx-deploy-mukesh-5958d6d547   1         1         1       2m6s
+    ```
+
+* `kubectl expose deployment  nginx-deploy-firoz --port 80`
+
+  ```
+  service/nginx-deploy-firoz exposed
+  ```
+
+* `kubectl expose deployment  nginx-deploy-mukesh --port 80`
+```
+service/nginx-deploy-mukesh exposed
+```
+  
