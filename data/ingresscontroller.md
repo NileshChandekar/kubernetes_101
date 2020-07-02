@@ -246,3 +246,27 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
     NAME                                           DESIRED   CURRENT   READY   AGE
     replicaset.apps/nginx-deploy-main-545f4f6967   3         3         3       15m
     ```
+
+  * `kubectl get service`
+
+    ```diff
+    NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+    kubernetes          ClusterIP   10.96.0.1       <none>        443/TCP   5d
+    + nginx-deploy-main   ClusterIP   10.105.165.88   <none>        80/TCP    4m19s
+    ```
+  * `kubectl describe service nginx-deploy-main
+
+    ```diff
+    Name:              nginx-deploy-main
+    Namespace:         default
+    + Labels:            run=nginx
+    Annotations:       <none>
+    + Selector:          run=nginx-main
+    + Type:              ClusterIP
+    IP:                10.105.165.88
+    Port:              <unset>  80/TCP
+    TargetPort:        80/TCP
+    + Endpoints:         192.168.136.81:80,192.168.201.210:80,192.168.33.214:80
+    Session Affinity:  None
+    Events:            <none>
+    ```  
