@@ -367,4 +367,72 @@ ingress.extensions "ingress-resource-1" deleted
 ```
 service/nginx-deploy-mukesh exposed
 ```
-  
+
+* `kubectl get all`
+
+    ```diff
+    NAME                                       READY   STATUS    RESTARTS   AGE
+    pod/nginx-deploy-firoz-b9d974f8d-lzhfs     1/1     Running   0          4m42s
+    pod/nginx-deploy-main-545f4f6967-9hjkj     1/1     Running   0          58m
+    pod/nginx-deploy-main-545f4f6967-dgxb9     1/1     Running   0          58m
+    pod/nginx-deploy-main-545f4f6967-hjzwp     1/1     Running   0          58m
+    pod/nginx-deploy-mukesh-5958d6d547-pmffp   1/1     Running   0          3m51s
+
+    NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+    service/kubernetes            ClusterIP   10.96.0.1        <none>        443/TCP   5d
+    + service/nginx-deploy-firoz    ClusterIP   10.98.114.219    <none>        80/TCP    87s
+    service/nginx-deploy-main     ClusterIP   10.105.165.88    <none>        80/TCP    44m
+    + service/nginx-deploy-mukesh   ClusterIP   10.100.155.139   <none>        80/TCP    82s
+
+    NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/nginx-deploy-firoz    1/1     1            1           4m42s
+    deployment.apps/nginx-deploy-main     3/3     3            3           58m
+    deployment.apps/nginx-deploy-mukesh   1/1     1            1           3m51s
+
+    NAME                                             DESIRED   CURRENT   READY   AGE
+    replicaset.apps/nginx-deploy-firoz-b9d974f8d     1         1         1       4m42s
+    replicaset.apps/nginx-deploy-main-545f4f6967     3         3         3       58m
+    replicaset.apps/nginx-deploy-mukesh-5958d6d547   1         1         1       3m51s
+    ```
+
+* `kubectl create -f ingress-resource-2.yaml`
+
+    ```
+    ingress.extensions/ingress-resource-2 created
+    ```
+
+* `kubectl get ingress`
+
+    ```
+    NAME                 CLASS    HOSTS                                                    ADDRESS   PORTS   AGE
+    ingress-resource-2   <none>   nginx.example.com,firoz.example.com,mukesh.example.com             80      37s
+    ```
+
+* `kubectl describe ingress ingress-resource-2`
+
+    ```diff
+    Name:             ingress-resource-2
+    Namespace:        default
+    Address:          
+    Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+    Rules:
+      Host                Path  Backends
+      ----                ----  --------
+    +   nginx.example.com   
+                             nginx-deploy-main:80 (192.168.136.81:80,192.168.201.210:80,192.168.33.214:80)
+    +   firoz.example.com   
+                             nginx-deploy-firoz:80 (192.168.33.216:80)
+    +   mukesh.example.com  
+                             nginx-deploy-mukesh:80 (192.168.201.211:80)
+    Annotations:          <none>
+    Events:
+      Type    Reason          Age   From                      Message
+      ----    ------          ----  ----                      -------
+      Normal  AddedOrUpdated  81s   nginx-ingress-controller  Configuration for default/ingress-resource-2 was added or updated
+      Normal  AddedOrUpdated  81s   nginx-ingress-controller  Configuration for default/ingress-resource-2 was added or updated
+      Normal  AddedOrUpdated  81s   nginx-ingress-controller  Configuration for default/ingress-resource-2 was added or updated
+    ```
+
+    ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11115.png)
+
+    ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11116.png)
