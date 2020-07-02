@@ -173,7 +173,7 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
 
 * Now the ingress controller is ready.
 
-* Create pod
+## Create pod
   * `kubectl create -f nginx-deploy-main.yaml`
   ```
   deployment.apps/nginx-deploy-main created
@@ -188,20 +188,21 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
   ```
 
   * `for i in $(kubectl get pod | awk {'print $1'} | awk 'NR > 1'); do kubectl describe pod $i | grep -i node ; done`
-  ```diff
-  + Node:         kworker1.example.com/192.168.100.15
-  Node-Selectors:  <none>
-  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
-                   node.kubernetes.io/unreachable:NoExecute for 300s
-  + Node:         kworker3.example.com/192.168.100.17
-  Node-Selectors:  <none>
-  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
-                   node.kubernetes.io/unreachable:NoExecute for 300s
-  + Node:         kworker2.example.com/192.168.100.16
-  Node-Selectors:  <none>
-  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
-                   node.kubernetes.io/unreachable:NoExecute for 300s
-  ```
+
+    ```diff
+    + Node:         kworker1.example.com/192.168.100.15
+    Node-Selectors:  <none>
+    Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                     node.kubernetes.io/unreachable:NoExecute for 300s
+    + Node:         kworker3.example.com/192.168.100.17
+    Node-Selectors:  <none>
+    Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                     node.kubernetes.io/unreachable:NoExecute for 300s
+    + Node:         kworker2.example.com/192.168.100.16
+    Node-Selectors:  <none>
+    Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                     node.kubernetes.io/unreachable:NoExecute for 300s
+    ```
 
   * `kubectl get all`
 
@@ -221,13 +222,14 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
     replicaset.apps/nginx-deploy-main-545f4f6967   3         3         3       10m
     ```
 
-  * Create a Service or expose a service.
+## Create a Service or expose a service.
 
   *  `kubectl expose deployment  nginx-deploy-main --port 80`
 
     ```
     service/nginx-deploy-main exposed
     ```
+
   * `kubectl get all`
 
     ```diff
@@ -270,3 +272,37 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
     Session Affinity:  None
     Events:            <none>
     ```  
+
+## Create Ingress Resource Rules:
+
+* `kubectl create -f ingress-resource-1.yaml`
+```
+ingress.networking.k8s.io/ingress-resource-1 created
+```
+
+* `kubectl get ingress`
+```
+NAME                 CLASS    HOSTS                ADDRESS   PORTS   AGE
+ingress-resource-1   <none>   nilesh.example.com             80      44s
+```
+
+* `kubectl describe ingress ingress-resource-1`
+
+  ```diff
+  Name:             ingress-resource-1
+  Namespace:        default
+  Address:          
+  Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+  Rules:
+    Host                Path  Backends
+    ----                ----  --------
+  +   nilesh.example.com  
+  +                          nginx-deploy-main:80  (192.168.136.81:80,192.168.201.210:80,192.168.33.214:80)
+  Annotations:          <none>
+  Events:
+    Type    Reason          Age   From                      Message
+    ----    ------          ----  ----                      -------
+    Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
+    Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
+    Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
+  ```
