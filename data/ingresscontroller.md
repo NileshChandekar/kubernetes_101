@@ -326,6 +326,7 @@ ingress.extensions "ingress-resource-1" deleted
   ```
   deployment.apps/nginx-deploy-firoz created
   ```
+
 * `kubectl create -f nginx-deploy-mukesh.yaml`
 
   ```
@@ -344,7 +345,7 @@ ingress.extensions "ingress-resource-1" deleted
 
     NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
     service/kubernetes          ClusterIP   10.96.0.1       <none>        443/TCP   5d
-    + service/nginx-deploy-main   ClusterIP   10.105.165.88   <none>        80/TCP    42m
+    service/nginx-deploy-main   ClusterIP   10.105.165.88   <none>        80/TCP    42m
 
     NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
     deployment.apps/nginx-deploy-firoz    1/1     1            1           2m57s
@@ -364,9 +365,10 @@ ingress.extensions "ingress-resource-1" deleted
   ```
 
 * `kubectl expose deployment  nginx-deploy-mukesh --port 80`
-```
-service/nginx-deploy-mukesh exposed
-```
+
+  ```
+  service/nginx-deploy-mukesh exposed
+  ```
 
 * `kubectl get all`
 
