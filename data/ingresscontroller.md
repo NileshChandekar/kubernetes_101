@@ -73,6 +73,8 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
 ```
 * `kubectl get clusterroles | grep -i nginx`  # no cluster role are defined yet.
 
+* `kubectl -n kube-system get pods | grep -i nginx` # no rbac defined yet.
+
 
 
 * `git clone https://github.com/nginxinc/kubernetes-ingress.git`
@@ -87,16 +89,116 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
   ```
   * `kubectl get ns`
 
-  ```diff
-    NAME                   STATUS   AGE
-    default                Active   78d
-    kube-node-lease        Active   78d
-    kube-public            Active   78d
-    kube-system            Active   78d
-    kubernetes-dashboard   Active   75d
-  + nginx-ingress          Active   86s
+    ```diff
+      NAME                   STATUS   AGE
+      default                Active   78d
+      kube-node-lease        Active   78d
+      kube-public            Active   78d
+      kube-system            Active   78d
+      kubernetes-dashboard   Active   75d
+    + nginx-ingress          Active   86s
+    ```
+
+  * Create a secret
+
+  * `kubectl create -f common/default-server-secret.yaml`
   ```
+  secret/default-server-secret created
+  ```
+  * `kubectl get secrets --all-namespaces | grep -i nginx`
+  ```
+  nginx-ingress          default-server-secret                            Opaque                                2      2m9s
+  nginx-ingress          default-token-5gkmj                              kubernetes.io/service-account-token   3      9m23s
+  nginx-ingress          nginx-ingress-token-4mjw2                        kubernetes.io/service-account-token   3      9m23s
+  ```
+
+  * Create a config map for customizing NGINX configuration:
+
+  * `kubectl create -f common/nginx-config.yaml `
+  ```
+  configmap/nginx-config created
+  ```
+  * `kubectl get configmaps --all-namespaces`
+
+    ```diff
+      NAMESPACE              NAME                                 DATA   AGE
+      kube-public            cluster-info                         1      78d
+      kube-system            calico-config                        4      78d
+      kube-system            coredns                              1      78d
+      kube-system            extension-apiserver-authentication   6      78d
+      kube-system            kube-proxy                           2      78d
+      kube-system            kubeadm-config                       2      78d
+      kube-system            kubelet-config-1.18                  1      78d
+      kube-system            kubernetes-dashboard-settings        1      77d
+      kubernetes-dashboard   kubernetes-dashboard-settings        0      75d
+    + nginx-ingress          nginx-config                         0      58s
+    ```
+
   * Create a cluster role and cluster role binding for the service account:
   ```
-  kubectl apply -f rbac/rbac.yaml
+  kubectl create -f rbac/rbac.yaml
+  ```
+  * `kubectl create -f rbac/rbac.yaml`
+  ```
+  clusterrole.rbac.authorization.k8s.io/nginx-ingress created
+  clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress created
+  ```
+
+  * Deploy the Ingress Controller
+  * 2 ways to deploy Ingress controller:
+    * `Deployment`
+    * `DaemonSet`
+
+# Using `DaemonSet`    
+
+  * `kubectl create -f daemon-set/nginx-ingress.yaml`
+  ```
+  daemonset.apps/nginx-ingress created
+  ```
+  * `kubectl get daemonsets.apps -n nginx-ingress`
+  ```
+  NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+  nginx-ingress   3         3         3       3            3           <none>          102s
+  ```
+  * `kubectl get all -n nginx-ingress`
+  ```
+  NAME                      READY   STATUS    RESTARTS   AGE
+  pod/nginx-ingress-2zzlk   1/1     Running   0          2m46s
+  pod/nginx-ingress-588jf   1/1     Running   0          2m46s
+  pod/nginx-ingress-l24tn   1/1     Running   0          2m46s
+
+  NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+  daemonset.apps/nginx-ingress   3         3         3       3            3           <none>          2m47s
+  ```
+
+* Now the ingress controller is ready.
+
+* Create pod
+  * `kubectl create -f nginx-deploy-main.yaml`
+  ```
+  deployment.apps/nginx-deploy-main created
+  ```
+
+  * `kubectl get pods`
+  ```
+  NAME                                 READY   STATUS    RESTARTS   AGE
+  nginx-deploy-main-545f4f6967-9hjkj   1/1     Running   0          52s
+  nginx-deploy-main-545f4f6967-dgxb9   1/1     Running   0          52s
+  nginx-deploy-main-545f4f6967-hjzwp   1/1     Running   0          52s
+  ```
+
+  * `for i in $(kubectl get pod | awk {'print $1'} | awk 'NR > 1'); do kubectl describe pod $i | grep -i node ; done`
+  ```diff
+  + Node:         kworker1.example.com/192.168.100.15
+  Node-Selectors:  <none>
+  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                   node.kubernetes.io/unreachable:NoExecute for 300s
+  + Node:         kworker3.example.com/192.168.100.17
+  Node-Selectors:  <none>
+  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                   node.kubernetes.io/unreachable:NoExecute for 300s
+  + Node:         kworker2.example.com/192.168.100.16
+  Node-Selectors:  <none>
+  Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                   node.kubernetes.io/unreachable:NoExecute for 300s
   ```
