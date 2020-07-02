@@ -202,3 +202,47 @@ default-token-65jpj   kubernetes.io/service-account-token   3      78d
   Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
                    node.kubernetes.io/unreachable:NoExecute for 300s
   ```
+
+  * `kubectl get all`
+
+    ```
+    NAME                                     READY   STATUS    RESTARTS   AGE
+    pod/nginx-deploy-main-545f4f6967-9hjkj   1/1     Running   0          10m
+    pod/nginx-deploy-main-545f4f6967-dgxb9   1/1     Running   0          10m
+    pod/nginx-deploy-main-545f4f6967-hjzwp   1/1     Running   0          10m
+
+    NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+    service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   4d23h
+
+    NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/nginx-deploy-main   3/3     3            3           10m
+
+    NAME                                           DESIRED   CURRENT   READY   AGE
+    replicaset.apps/nginx-deploy-main-545f4f6967   3         3         3       10m
+    ```
+
+  * Create a Service or expose a service.
+
+  *  `kubectl expose deployment  nginx-deploy-main --port 80`
+
+    ```
+    service/nginx-deploy-main exposed
+    ```
+  * `kubectl get all`
+
+    ```diff
+    NAME                                     READY   STATUS    RESTARTS   AGE
+    pod/nginx-deploy-main-545f4f6967-9hjkj   1/1     Running   0          15m
+    pod/nginx-deploy-main-545f4f6967-dgxb9   1/1     Running   0          15m
+    pod/nginx-deploy-main-545f4f6967-hjzwp   1/1     Running   0          15m
+
+    NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+    service/kubernetes          ClusterIP   10.96.0.1       <none>        443/TCP   4d23h
+    + service/nginx-deploy-main   ClusterIP   10.105.165.88   <none>        80/TCP    61s
+
+    NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/nginx-deploy-main   3/3     3            3           15m
+
+    NAME                                           DESIRED   CURRENT   READY   AGE
+    replicaset.apps/nginx-deploy-main-545f4f6967   3         3         3       15m
+    ```
