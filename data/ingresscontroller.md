@@ -289,7 +289,7 @@ ingress-resource-1   <none>   nilesh.example.com             80      44s
 * `kubectl describe ingress ingress-resource-1`
 
   ```diff
-  Name:             ingress-resource-1
+  + Name:             ingress-resource-1
   Namespace:        default
   Address:          
   Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
@@ -306,3 +306,5 @@ ingress-resource-1   <none>   nilesh.example.com             80      44s
     Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
     Normal  AddedOrUpdated  90s   nginx-ingress-controller  Configuration for default/ingress-resource-1 was added or updated
   ```
+
+  ![Image ipa](https://github.com/NileshChandekar/kubernetes_101/blob/master/images/11113.png)
