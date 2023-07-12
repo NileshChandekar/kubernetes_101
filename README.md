@@ -12,7 +12,6 @@
 
 [Pod](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/pods.md)
 
-[Ceph-CSI](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/Ceph-CSI.md)
 
 
 Excercise
@@ -20,3 +19,7 @@ Excercise
  * [Pod Creation Method's](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/excercise.md)
 
  * [Ingress Controller](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/ingresscontroller.md)
+
+ * [Ceph-CSI](https://github.com/NileshChandekar/kubernetes_101/blob/master/data/Ceph-CSI.md)
+
+
